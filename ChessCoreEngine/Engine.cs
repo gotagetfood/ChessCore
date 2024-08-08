@@ -196,6 +196,33 @@ namespace ChessEngine.Engine
             InitiateBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
         }
 
+        public void NewGame960()
+        {
+            InitiateEngine();
+            char[] randoBoard = { 'r', 'r', 'n', 'n', 'b', 'b', 'q', 'k' };
+            
+            Randomizer.Randomize(randoBoard);
+            while (ListEm(randoBoard) == "rnbqkbnr")
+            {
+                Randomizer.Randomize(randoBoard);
+            }
+
+            string strRandoBoard = ListEm(randoBoard);
+
+            InitiateBoard(strRandoBoard + "/pppppppp/8/8/8/8/PPPPPPPP/" + strRandoBoard.ToUpper() + " w KQkq - 0 1");
+        }
+
+        private string ListEm(char[] array)
+        {
+            string strOut = "";
+            foreach (char c in array)
+            {
+                strOut += c;
+            }
+            return strOut;
+        }
+
+
         public void InitiateBoard(string fen)
         {
             ChessBoard = new Board(fen);
@@ -1019,5 +1046,23 @@ namespace ChessEngine.Engine
         #endregion
    
 
+    }
+
+    public class Randomizer
+    {
+        public static void Randomize<T>(T[] items)
+        {
+            Random rand = new Random();
+
+            // For each spot in the array, pick
+            // a random item to swap into that spot.
+            for (int i = 0; i < items.Length - 1; i++)
+            {
+                int j = rand.Next(i, items.Length);
+                T temp = items[i];
+                items[i] = items[j];
+                items[j] = temp;
+            }
+        }
     }
 }

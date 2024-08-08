@@ -59,7 +59,12 @@ class Program
 						engine.NewGame();
 						continue;
 					}
-					if (move == "quit")
+                    if (move == "new960")
+                    {
+                        engine.NewGame960();
+                        continue;
+                    }
+                    if (move == "quit")
 					{
 						return;
 					}
